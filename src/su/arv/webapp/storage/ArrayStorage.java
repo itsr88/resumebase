@@ -10,6 +10,14 @@ public class ArrayStorage {
     private int size = 0;
     private Resume[] storage = new Resume[10000];
 
+    private boolean isExistsResume(Resume resume) {
+        for (int i = 0; i < size; i++) {
+            if (storage[i].getUuid().equals(resume.getUuid()))
+                return true;
+        }
+        return false;
+    }
+
     public void clear() {
         for (int i = 0; i < size; i++) {
             storage[i] = null;
@@ -17,9 +25,20 @@ public class ArrayStorage {
         size = 0;
     }
 
-    public void save(Resume r) {
-        storage[size] = r;
-        size++;
+    public void save(Resume resume) {
+        if (isExistsResume(resume)) {
+            System.out.println("Error: resume is exists");
+        } else {
+            storage[size] = resume;
+            size++;
+        }
+    }
+
+    public void update(Resume resume) {
+        for (int i = 0; i < size; i++) {
+            if (storage[i].getUuid().equals(resume.getUuid()))
+                storage[i] = resume;
+        }
     }
 
     public Resume get(String uuid) {

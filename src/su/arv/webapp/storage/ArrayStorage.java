@@ -15,7 +15,7 @@ public class ArrayStorage extends AbstractArrayStorage {
     }
 
     public void save(Resume resume) {
-        if (isExist(resume.getUuid()) || size == STORAGE_LIMIT) {
+        if (getIndex(resume.getUuid()) != -1 || size == STORAGE_LIMIT) {
             System.out.println("SAVE Error: resume is exist or array is full");
         } else {
             storage[size] = resume;
@@ -24,7 +24,7 @@ public class ArrayStorage extends AbstractArrayStorage {
     }
 
     public void update(Resume resume) {
-        if (!isExist(resume.getUuid())) {
+        if (getIndex(resume.getUuid()) == -1) {
             System.out.println("UPDATE Error: resume doesnt exist");
         } else {
             for (int i = 0; i < size; i++) {
@@ -34,20 +34,8 @@ public class ArrayStorage extends AbstractArrayStorage {
         }
     }
 
-    public Resume get(String uuid) {
-        if (!isExist(uuid)) {
-            System.out.println("GET Error: resume doesnt exist");
-        } else {
-            for (int i = 0; i < size; i++) {
-                if (storage[i].getUuid().equals(uuid))
-                    return storage[i];
-            }
-        }
-        return null;
-    }
-
     public void delete(String uuid) {
-        if (!isExist(uuid)) {
+        if (getIndex(uuid) == -1) {
             System.out.println("DELETE Error: resume doesnt exist");
         } else {
             for (int i = 0; i < size; i++) {
@@ -67,11 +55,11 @@ public class ArrayStorage extends AbstractArrayStorage {
         return Arrays.copyOfRange(storage, 0, size);
     }
 
-    private boolean isExist(String uuid) {
+    protected int getIndex(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid))
-                return true;
+                return i;
         }
-        return false;
+        return -1;
     }
 }

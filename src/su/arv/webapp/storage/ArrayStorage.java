@@ -2,23 +2,24 @@ package su.arv.webapp.storage;
 
 import su.arv.webapp.model.Resume;
 
+import java.util.Arrays;
+
 /**
  * Array based storage for Resumes
  */
-public class ArrayStorage {
+public class ArrayStorage implements Storage {
 
+    private static final int STORAGE_LIMIT = 5;
     private int size = 0;
-    private Resume[] storage = new Resume[5];
+    private final Resume[] storage = new Resume[STORAGE_LIMIT];
 
     public void clear() {
-        for (int i = 0; i < size; i++) {
-            storage[i] = null;
-        }
+        Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
     public void save(Resume resume) {
-        if (isExist(resume.getUuid()) || size == storage.length) {
+        if (isExist(resume.getUuid()) || size == STORAGE_LIMIT) {
             System.out.println("SAVE Error: resume is exist or array is full");
         } else {
             storage[size] = resume;
@@ -67,11 +68,7 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     public Resume[] getAll() {
-        Resume[] resumeWithoutNull = new Resume[size];
-        for (int i = 0; i < size; i++) {
-            resumeWithoutNull[i] = storage[i];
-        }
-        return resumeWithoutNull;
+        return Arrays.copyOfRange(storage, 0, size);
     }
 
     public int size() {

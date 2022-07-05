@@ -1,5 +1,8 @@
 package su.arv.webapp.storage;
 
+import su.arv.webapp.exception.ExistStorageException;
+import su.arv.webapp.exception.NotExistStorageException;
+import su.arv.webapp.exception.StorageException;
 import su.arv.webapp.model.Resume;
 
 import java.util.Arrays;
@@ -15,8 +18,10 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public void save(Resume resume) {
         int index = getIndex(resume.getUuid());
-        if (index != -1 || size == STORAGE_LIMIT) {
-            System.out.println("SAVE Error: resume is exist or array is full");
+        if (index > 0) {
+            throw new ExistStorageException(resume.getUuid());
+        } else if (size == STORAGE_LIMIT) {
+            throw new StorageException("Storage overflow!", resume.getUuid());
         } else {
             insertElement(resume, index);
             size++;
@@ -24,8 +29,9 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     public void update(Resume resume) {
-        if (getIndex(resume.getUuid()) == -1) {
-            System.out.println("UPDATE Error: resume doesnt exist");
+        int index = getIndex(resume.getUuid());
+        if (index < 0) {
+            throw new NotExistStorageException(resume.getUuid());
         } else {
             for (int i = 0; i < size; i++) {
                 if (storage[i].getUuid().equals(resume.getUuid()))
@@ -35,21 +41,18 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     public Resume get(String uuid) {
-        if (getIndex(uuid) == -1) {
-            System.out.println("GET Error: resume doesnt exist");
+        int index = getIndex(uuid);
+        if (index < 0) {
+            throw new NotExistStorageException(uuid);
         } else {
-            for (int i = 0; i < size; i++) {
-                if (storage[i].getUuid().equals(uuid))
-                    return storage[i];
-            }
+            return storage[index];
         }
-        return null;
     }
 
     public void delete(String uuid) {
         int index = getIndex(uuid);
-        if (index == -1) {
-            System.out.println("DELETE Error: resume doesnt exist");
+        if (index < 0) {
+            throw new NotExistStorageException(uuid);
         } else {
             fillDeletedElement(index);
             storage[size - 1] = null;

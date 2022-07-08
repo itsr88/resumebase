@@ -2,13 +2,11 @@ package su.arv.webapp;
 
 import su.arv.webapp.model.Resume;
 import su.arv.webapp.storage.ArrayStorage;
+import su.arv.webapp.storage.SortedArrayStorage;
 import su.arv.webapp.storage.Storage;
 
-/**
- * Test for your su.arv.webapp.storage.ArrayStorage implementation
- */
 public class MainTestArrayStorage {
-    private static final Storage ARRAY_STORAGE = new ArrayStorage();
+    private static final Storage ARRAY_STORAGE = new SortedArrayStorage();
 
     public static void main(String[] args) {
         final Resume r1 = new Resume();
@@ -21,12 +19,13 @@ public class MainTestArrayStorage {
         ARRAY_STORAGE.save(r2);
         ARRAY_STORAGE.save(r3);
         ARRAY_STORAGE.save(r4);
+        ARRAY_STORAGE.save(r5);
         ARRAY_STORAGE.update(r5);
 
         System.out.println("Get r1: " + ARRAY_STORAGE.get(r1.getUuid()));
         System.out.println("Size: " + ARRAY_STORAGE.size());
 
-        System.out.println("Get dummy: " + ARRAY_STORAGE.get("dummy"));
+//        System.out.println("Get dummy: " + ARRAY_STORAGE.get("dummy"));
 
         printAll();
         ARRAY_STORAGE.delete(r1.getUuid());

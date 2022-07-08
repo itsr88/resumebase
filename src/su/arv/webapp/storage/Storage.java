@@ -2,9 +2,6 @@ package su.arv.webapp.storage;
 
 import su.arv.webapp.model.Resume;
 
-/**
- * Array based storage for Resumes
- */
 public interface Storage {
 
     void clear();

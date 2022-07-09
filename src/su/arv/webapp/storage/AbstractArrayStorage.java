@@ -30,10 +30,7 @@ public abstract class AbstractArrayStorage implements Storage {
         if (index < 0) {
             throw new NotExistStorageException(resume.getUuid());
         } else {
-            for (int i = 0; i < size; i++) {
-                if (storage[i].getUuid().equals(resume.getUuid()))
-                    storage[i] = resume;
-            }
+            storage[index] = resume;
         }
     }
 

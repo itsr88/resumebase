@@ -5,13 +5,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import su.arv.webapp.exception.ExistStorageException;
 import su.arv.webapp.exception.NotExistStorageException;
-import su.arv.webapp.exception.StorageException;
 import su.arv.webapp.model.Resume;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class AbstractArrayStorageTest {
+public class AbstractStorageTest {
     private static final String UUID_1 = "uuid_1";
     private static final Resume RESUME_1 = new Resume(UUID_1);
 
@@ -24,9 +23,9 @@ public class AbstractArrayStorageTest {
     private static final String UUID_4 = "uuid_4";
     private static final Resume RESUME_4 = new Resume(UUID_4);
 
-    private final Storage storage;
+    protected final Storage storage;
 
-    public AbstractArrayStorageTest(Storage storage) {
+    public AbstractStorageTest(Storage storage) {
         this.storage = storage;
     }
 
@@ -63,20 +62,6 @@ public class AbstractArrayStorageTest {
     public void saveExist() {
         Assertions.assertThrows(ExistStorageException.class, () -> {
             storage.save(RESUME_1);
-        });
-    }
-
-    @Test
-    public void saveOverflow() {
-        Assertions.assertThrows(StorageException.class, () -> {
-            try {
-                for (int i = 4; i <= AbstractArrayStorage.STORAGE_LIMIT; i++) {
-                    storage.save(new Resume());
-                }
-            } catch (StorageException e) {
-                Assertions.fail();
-            }
-            storage.save(new Resume());
         });
     }
 

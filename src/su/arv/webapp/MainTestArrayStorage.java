@@ -1,7 +1,6 @@
 package su.arv.webapp;
 
 import su.arv.webapp.model.Resume;
-import su.arv.webapp.storage.ArrayStorage;
 import su.arv.webapp.storage.SortedArrayStorage;
 import su.arv.webapp.storage.Storage;
 
@@ -9,11 +8,11 @@ public class MainTestArrayStorage {
     private static final Storage ARRAY_STORAGE = new SortedArrayStorage();
 
     public static void main(String[] args) {
-        final Resume r1 = new Resume();
-        final Resume r2 = new Resume();
-        final Resume r3 = new Resume();
-        final Resume r4 = new Resume();
-        final Resume r5 = new Resume();
+        final Resume r1 = new Resume("Name1");
+        final Resume r2 = new Resume("Name2");
+        final Resume r3 = new Resume("Name3");
+        final Resume r4 = new Resume("Name4");
+        final Resume r5 = new Resume("Name5");
 
         ARRAY_STORAGE.save(r1);
         ARRAY_STORAGE.save(r2);
@@ -47,7 +46,7 @@ public class MainTestArrayStorage {
 
     static void printAll() {
         System.out.println("\nGet All");
-        for (Resume r : ARRAY_STORAGE.getAll()) {
+        for (Resume r : ARRAY_STORAGE.getAllSorted()) {
             System.out.println(r);
         }
     }

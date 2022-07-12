@@ -1,12 +1,10 @@
 package su.arv.webapp.storage;
 
-import su.arv.webapp.exception.ExistStorageException;
-import su.arv.webapp.exception.NotExistStorageException;
 import su.arv.webapp.exception.StorageException;
 import su.arv.webapp.model.Resume;
 
-import java.beans.IntrospectionException;
 import java.util.Arrays;
+import java.util.List;
 
 public abstract class AbstractArrayStorage extends AbstractStorage {
 
@@ -50,8 +48,9 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return size;
     }
 
-    public Resume[] getAll() {
-        return Arrays.copyOfRange(storage, 0, size);
+    @Override
+    public List<Resume> doCopyAll() {
+        return Arrays.asList(Arrays.copyOfRange(storage, 0, size));
     }
 
     @Override

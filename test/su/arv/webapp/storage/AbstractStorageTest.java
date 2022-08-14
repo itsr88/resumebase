@@ -7,6 +7,7 @@ import su.arv.webapp.exception.ExistStorageException;
 import su.arv.webapp.exception.NotExistStorageException;
 import su.arv.webapp.model.*;
 
+import java.io.File;
 import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
@@ -15,6 +16,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public abstract class AbstractStorageTest {
+    protected static final File STORAGE_DIR = new File("C:\\repos\\Java\\resumebase\\src\\su\\arv\\webapp\\storage");
+
     protected Storage storage;
 
     private static final String UUID_1 = "uuid_1";

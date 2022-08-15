@@ -12,6 +12,8 @@ import static su.arv.webapp.util.DateUtil.NOW;
 import static su.arv.webapp.util.DateUtil.of;
 
 public class Organization implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private final Link homePage;
     private List<Position> positions = new ArrayList<>();
 

@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public abstract class AbstractStorageTest {
-    protected static final File STORAGE_DIR = new File("C:\\repos\\Java\\resumebase\\src\\su\\arv\\webapp\\storage");
+    protected static final File STORAGE_DIR = new File("C:\\repos\\Java\\resumebase\\storage");
 
     protected Storage storage;
 
@@ -80,7 +80,7 @@ public abstract class AbstractStorageTest {
     public void update() {
         Resume newResume = new Resume(UUID_1, "Name1");
         storage.update(newResume);
-        assertTrue(newResume == storage.get(UUID_1));
+        assertTrue(newResume.equals(storage.get(UUID_1)));
     }
 
     @Test
